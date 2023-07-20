@@ -82,7 +82,7 @@ main {
 
 @media screen and (max-width: 500px) {
     .main-grid {
-        grid-template-columns: 1fr 8fr 1fr;
+        grid-template-columns: 0fr 1fr 0fr;
     }
 
     .title {
