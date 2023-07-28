@@ -1,37 +1,68 @@
-async function GetKitty() {
-    const url = "https://cataas.com/cat?json=true";
+let oldImageUrl = null;
+
+async function getKitty() {
+    const radios = document.getElementsByName("main-radio");
+    let selectedRadioValue = "all"; // Default value
+
+    // Find the checked radio button and get its value
+    for (const radio of radios) {
+        if (radio.checked) {
+            selectedRadioValue = radio.value;
+            break;
+        }
+    }
+
+    // Use the selected value to form the new URL
+    let url = "https://api.thecatapi.com/v1/images/search?limit=1";
+    if (selectedRadioValue === "beng") {
+        url += "&breed_ids=beng";
+    } else if (selectedRadioValue === "chee") {
+        url += "&breed_ids=chee";
+    } else if (selectedRadioValue === "lihu") {
+        url += "&breed_ids=lihu";
+    }
+
     const loader = document.querySelector(".main-box div div");
     const catImageDiv = document.getElementById("catImage");
 
     try {
-        loader.classList.add("blurred"); // Apply the blur and opacity to the old image
-        loader.style.display = "block"; // Show the loader
+        loader.classList.add("blurred");
+        loader.style.display = "block";
 
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data && data.url) {
-            // Create a new image element
+        if (data && data[0] && data[0].url) {
+
+            // Check if the old image URL is the same as the current one
+            if (oldImageUrl === data[0].url) {
+                // Rerun the function
+                getKitty();
+                return;
+            }
+
+            oldImageUrl = data[0].url; // Update the old image URL
+
             const newImage = new Image();
             newImage.onload = function () {
-                // Once the image is fully loaded, set it as the background
+
                 catImageDiv.style.backgroundImage = `url(${this.src})`;
-                loader.classList.remove("blurred"); // Remove the blur and opacity from the old image
-                loader.style.display = "none"; // Hide the loader when the image is loaded
+                loader.classList.remove("blurred");
+                loader.style.display = "none";
             };
-            newImage.src = `https://cataas.com${data.url}`;
+            newImage.src = data[0].url;
         } else {
             throw new Error("Invalid response from the server.");
         }
     } catch (error) {
         console.error("Error fetching the cat image:", error);
-        // Handle the error appropriately (e.g., show an error message to the user).
-        loader.classList.remove("blurred"); // Remove the blur and opacity in case of an error
-        loader.style.display = "none"; // Hide the loader in case of an error
+
+        loader.classList.remove("blurred");
+        loader.style.display = "none";
     }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    GetKitty();
+    getKitty();
     $('[data-toggle="tooltip"]').tooltip();
 });

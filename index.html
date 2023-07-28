@@ -34,15 +34,28 @@
                 <div></div>
                 <div></div>
                 <div class="main-box">
-                    <div id="catImage">
-                        <div></div>
+                    <div id="catImage" class="sec-1">
+                        <div class="sec-2"></div>
                     </div>
-                    <button onclick="GetKitty()">Give New Kitty</button>
+                    <div class="main-controls">
+                        <div class="main-radio">
+                            <input type="radio" name="main-radio" id="radio-all" value="all" checked="True">
+                            <label for="radio-all">All</label>
+                            <input type="radio" name="main-radio" id="radio-beng" value="beng">
+                            <label for="radio-beng">Bengal</label>
+                            <input type="radio" name="main-radio" id="radio-chee" value="chee">
+                            <label for="radio-chee">Cheetoh</label>
+                            <input type="radio" name="main-radio" id="radio-lihu" value="lihu">
+                            <label for="radio-lihu">Dragon Li</label>
+                        </div>
+                        <button class="refresh-button" onclick="getKitty()"><i
+                                class="fa-solid fa-rotate-right"></i></button>
+                    </div>
                 </div>
                 <div></div>
                 <div></div>
                 <div class="social-wrapper">
-                    <a href="https://t.me/kittenhq" data-toggle="tooltip" title="Telegram">
+                    <a href="https://t.me/kittenhq" data-toggle="tooltip" title="Telegram" target="_blank">
                         <i class="fa-brands fa-telegram"></i>
                     </a>
                     <a href="https://kittens.icu" data-toggle="tooltip" title="Soon">
